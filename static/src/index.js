@@ -6,7 +6,7 @@ import React, {PureComponent} from 'react'
 import ReactDOM from 'react-dom'
 import "./index.less" 
 
-class SiderDemo extends React.Component {
+class Sider extends React.Component {
     state = {
       collapsed: false,
     };
@@ -22,18 +22,14 @@ class SiderDemo extends React.Component {
         <Layout>
           <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
             <div className="logo" />
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-              <Menu.Item key="1">
-                <Icon type="user" />
-                <span>nav 1</span>
+            <Menu theme="dark" mode="inline" defaultSelectedKeys={['build']}>
+              <Menu.Item key="build">
+                <Icon type="tool" />
+                <span>构建</span>
               </Menu.Item>
-              <Menu.Item key="2">
-                <Icon type="video-camera" />
-                <span>nav 2</span>
-              </Menu.Item>
-              <Menu.Item key="3">
-                <Icon type="upload" />
-                <span>nav 3</span>
+              <Menu.Item key="setting">
+                <Icon type="setting" />
+                <span>设置</span>
               </Menu.Item>
             </Menu>
           </Sider>
@@ -62,4 +58,4 @@ class SiderDemo extends React.Component {
   }
  
 
-ReactDOM.render(<SiderDemo />, document.getElementById("container"))
+ReactDOM.render(<Sider />, document.getElementById("container"))
