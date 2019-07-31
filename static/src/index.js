@@ -6,7 +6,7 @@ import React, {PureComponent} from 'react'
 import ReactDOM from 'react-dom'
 import "./index.less" 
 
-class Sider extends React.Component {
+class SiderPanel extends React.Component {
     state = {
       collapsed: false,
     };
@@ -58,4 +58,4 @@ class Sider extends React.Component {
   }
  
 
-ReactDOM.render(<Sider />, document.getElementById("container"))
+ReactDOM.render(<SiderPanel />, document.getElementById("container"))
