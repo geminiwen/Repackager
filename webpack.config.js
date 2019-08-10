@@ -4,6 +4,7 @@ const development = process.env.NODE_ENV !== "production"
 
 module.exports = {
     entry: "./static/src/index.js",
+    target: "electron-renderer",
     output: {
         filename: "index.js",
         path: path.resolve(__dirname, "static/dist")

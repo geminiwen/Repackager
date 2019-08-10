@@ -1,8 +1,14 @@
 const electron = require('electron')
 
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
 function createWindow () {   
+  ipcMain.on("get-android-home", (event, arg) => {
+    event.returnValue = process.env['ANDROID_HOME']
+  })
+
+
+
   // 创建浏览器窗口
   let win = new BrowserWindow({
     width: 800,
