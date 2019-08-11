@@ -1,43 +1,28 @@
 import React, {PureComponent} from 'react'
 import { Icon, Form, Input, Upload } from 'antd'
+import { connect } from 'dva'
 
 import { ipcRenderer, remote } from 'electron'
 
 const { dialog } = remote
 
-class Settings extends PureComponent {
-    
-    state = {
-        androidHome: ""
-    }
 
+class Settings extends PureComponent {
 
     componentDidMount = () => {
-        let androidHome = ipcRenderer.sendSync("get-android-home")
-        const { setFieldsValue } = this.props.form
-        setFieldsValue({"env": androidHome}) 
-    }
-
-    handleAndroidHome = (info) => {
-        let fileList = [...info.fileList];
+        // let androidHome = ipcRenderer.sendSync("get-android-home")
+        // const { setFieldsValue } = this.props.form
+        // setFieldsValue({"env": androidHome}) 
+        const { dispatch, form } = this.props
+        dispatch({type: "settings/fetch"})
     }
 
     showDirectoryBrowser = () => {
-        const { androidHome } = this.state
-        const { setFieldsValue } = this.props.form
-        if (androidHome) {
-        }
-        let result = dialog.showOpenDialogSync(
-            { title: "ANDROID_HOME", defaultPath: androidHome, properties: ["openDirectory"] }
-        )
-        
-        if (!result) return
+        const { dispatch } = this.props
 
-        setFieldsValue({"env": result[0]})
-
+        dispatch({type: "settings/save"})
     }
     
-
     render () {
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
@@ -55,7 +40,7 @@ class Settings extends PureComponent {
         <Form {...formItemLayout}>
            <Form.Item label="ANDROID_HOME">
             {getFieldDecorator('env', {
-                rules: [{ required: true, message: 'Please input your note!' }],
+                rules: [{ required: true, message: 'Please input your ANDROID_HOME env!' }],
             })(<Input addonAfter={
                 <Icon type="setting" onClick={this.showDirectoryBrowser} style={{cursor: "pointer"}} />
             } /> )}
@@ -66,6 +51,16 @@ class Settings extends PureComponent {
 
 }
 
-const WrappedRegistrationForm = Form.create({ name: 'settings' })(Settings);
+const FormComponent = Form.create({ 
+    name: 'settings',
+    mapPropsToFields: (props) => ({
+        env: Form.createFormField({ value: props.androidHome })
+    })
+})(Settings)
 
-export default WrappedRegistrationForm
+
+const ConnectedComponet = connect(
+    ({ settings}) => ({ androidHome: settings.androidHome })
+)
+(FormComponent)
+export default ConnectedComponet
